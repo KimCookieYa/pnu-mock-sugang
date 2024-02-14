@@ -1,9 +1,10 @@
 import HomeHeader from "@/components/HomeHeader";
 import HomeInput from "@/components/home/HomeInput";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="relative">
+    <>
       <HomeHeader />
       <main className="flex min-h-screen flex-col p-16 items-center gap-y-20">
         <h2 className="text-3xl font-bold text-pnuText mt-32">
@@ -24,11 +25,13 @@ export default function Home() {
               <div className="flex text-pnuText">국문 / 영어</div>
             </div>
           </div>
-          <button className="bg-pnuBlue text-white px-48 h-90 rounded">
-            로그인
-          </button>
+          <Link href="/main">
+            <button className="bg-pnuBlue text-white px-48 h-90 rounded">
+              로그인
+            </button>
+          </Link>
         </form>
       </main>
-    </div>
+    </>
   );
 }
