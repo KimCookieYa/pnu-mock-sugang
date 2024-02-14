@@ -1,7 +1,18 @@
+import SugangHeader from "@/components/sugang/SugangHeader";
+import SugangSidebar from "@/components/sugang/SugangSidebar";
+
 export default function SugangLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div>{children}</div>;
+  return (
+    <>
+      <SugangHeader />
+      <div className="flex">
+        <SugangSidebar />
+        {children}
+      </div>
+    </>
+  );
 }
