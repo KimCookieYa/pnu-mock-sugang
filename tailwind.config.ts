@@ -18,7 +18,9 @@ const config: Config = {
     extend: {
       colors: {
         pnuBlue: "#043d92",
+        pnuLightBlue: "#0455BF",
         pnuText: "#333",
+        pnuBgGray: "#F2F2F2",
       },
       width: generateCSSObject("width"),
       minWidth: generateCSSObject("minWidth"),
