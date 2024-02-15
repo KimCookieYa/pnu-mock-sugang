@@ -14,7 +14,7 @@ export default function SugangSidebar() {
           광고 영역
         </div>
       </aside>
-      <div className="min-w-200 h-screen" />
+      <div className="min-w-280 h-screen" />
     </>
   );
 }
@@ -69,8 +69,8 @@ function RestBlock() {
           <FaCalendarCheck color="gray" className="mr-8" />
           <label className="text-pnuText font-bold">수강신청(학부) 기간</label>
         </div>
-        <p className="text-gray-500 ml-40">2024-02-01(화) 08:00:00</p>
-        <p className="text-gray-500 ml-40">~ 2024-02-01(화) 09:00:00</p>
+        <p className="text-gray-500 ml-40">2099-02-01(화) 08:00:00</p>
+        <p className="text-gray-500 ml-40">~ 2099-03-01(화) 09:00:00</p>
       </div>
     </div>
   );
