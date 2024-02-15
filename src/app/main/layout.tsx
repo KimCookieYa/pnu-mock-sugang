@@ -11,7 +11,7 @@ export default function SugangLayout({
       <SugangHeader />
       <div className="flex">
         <SugangSidebar />
-        <main className="p-16">{children}</main>
+        <main className="p-16 w-full">{children}</main>
       </div>
     </>
   );

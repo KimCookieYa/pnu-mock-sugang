@@ -21,6 +21,7 @@ const config: Config = {
         pnuLightBlue: "#0455BF",
         pnuText: "#333",
         pnuBgGray: "#F2F2F2",
+        pnuWarn: "#D93654",
       },
       width: generateCSSObject("width"),
       minWidth: generateCSSObject("minWidth"),
