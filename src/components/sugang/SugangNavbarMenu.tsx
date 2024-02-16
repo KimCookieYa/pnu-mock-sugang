@@ -1,7 +1,8 @@
 "use client";
 
-import { subjectPropValues } from "@/types/subject";
 import { useState } from "react";
+import DesiredSubjectTable from "@/components/sugang/DesiredSubjectTable";
+import SubjectSearchSection from "@/components/sugang/SubjectSearchSection";
 
 const sugangMenu = [
   { label: "희망과목담기", id: 0 },
@@ -43,29 +44,8 @@ export default function SugangNavbarMenu() {
           <li className="w-full border-b border-pnuBlue"></li>
         </ul>
       </nav>
-      <DesiredSubjectTable />
+      {currentTab === 0 && <DesiredSubjectTable />}
+      {currentTab === 1 && <SubjectSearchSection />}
     </div>
-  );
-}
-
-function DesiredSubjectTable() {
-  return (
-    <table className="border-collapse border border-pnuText">
-      <thead>
-        <tr>
-          {subjectPropValues.map((prop) => (
-            <th key={prop} className="border border-pnuText">
-              {prop}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td className="border border-pnuText">1</td>
-          <td className="border border-pnuText">희망과목담기</td>
-        </tr>
-      </tbody>
-    </table>
   );
 }

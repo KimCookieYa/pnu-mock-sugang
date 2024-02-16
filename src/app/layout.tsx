@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import axios from "axios";
 
 export const metadata: Metadata = {
   title: "부산대학교 수강신청시스템 아님",
