@@ -107,7 +107,7 @@ function SubjectSearchResult() {
                     </button>
                   </td>
                   {subjectPropValues.map((prop, index) => (
-                    <TCell key={index} value={subject[prop]} />
+                    <TCell key={index} value={subject[prop as any]} />
                   ))}
                 </tr>
               </Fragment>

@@ -10,6 +10,8 @@ export enum ViewSubjectProp {
   note = "비고",
 }
 
+export const subjectPropValues: string[] = Object.values(ViewSubjectProp);
+
 export enum ExcelSubjectType {
   univName = "대학명",
   subjectName = "교과목명",
@@ -30,7 +32,7 @@ export enum ExcelSubjectType {
   remoteClass = "원격수업",
 }
 
-export const subjectPropValues: string[] = Object.values(ViewSubjectProp);
+export type ExcelSubjectTypeProp = keyof typeof ExcelSubjectType;
 
 export interface SubjectType {
   univName: string;
