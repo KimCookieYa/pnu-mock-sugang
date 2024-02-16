@@ -19,8 +19,6 @@ export default function SubjectSearchSection() {
 
   const onClickQuery = async () => {
     const data = await readExcelData("/sugang-data-20240124.xlsx");
-    console.log(data);
-    console.log(filterData(data, filter));
     setSubjectValues(filterData(data, filter));
   };
 
@@ -70,6 +68,9 @@ function SubjectFilterMenu() {
   ) => {
     setFilter({ ...filter, nativeLanguageClass: e.target.value });
   };
+
+  const onChangeSearchText = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setFilter({ ...filter, searchText: e.target.value });
 
   return (
     <table className="border-collapse border border-slate-300">
@@ -148,11 +149,17 @@ function SubjectFilterMenu() {
           <tr className="h-40">
             <SubjectLabel label="교과목명" />
             <td className="border border-slate-300 px-12" colSpan={3}>
-              <input type="text" className="border focus:outline-none" />
+              <input
+                type="text"
+                className="border focus:outline-none"
+                placeholder="교과목명 직접입력"
+                value={filter.searchText || ""}
+                onChange={onChangeSearchText}
+              />
             </td>
           </tr>
         )}
-        {filter.subjectClass === "교양선택" && (
+        {!searchMethod && filter.subjectClass === "교양선택" && (
           <tr className="h-40">
             <SubjectLabel label="세부구분" />
             <td className="border border-slate-300 px-12" colSpan={3}>

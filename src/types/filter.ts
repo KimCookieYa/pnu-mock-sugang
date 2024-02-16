@@ -3,4 +3,5 @@ export interface Filter {
   subjectClass: string;
   liveralArtsClass: number;
   nativeLanguageClass: string;
+  searchText: string | undefined;
 }

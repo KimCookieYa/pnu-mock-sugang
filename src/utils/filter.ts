@@ -9,8 +9,15 @@ export function filterData(
     return undefined;
   }
 
-  const { univ, subjectClass, nativeLanguageClass } = filter;
+  const { univ, subjectClass, nativeLanguageClass, searchText } = filter;
   let filteredData: ExcelSubjectType[] = data.filter((subject) => {
+    if (searchText) {
+      if (subject[ExcelSubjectType.subjectName as any].includes(searchText)) {
+        return true;
+      }
+      return false;
+    }
+
     if (!subject[ExcelSubjectType.univName as any].includes(univ)) {
       return false;
     } else if (subject[ExcelSubjectType.subjectClass as any] !== subjectClass) {
