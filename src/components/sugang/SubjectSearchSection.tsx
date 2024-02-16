@@ -2,17 +2,34 @@
 
 import { ExcelSubjectType, subjectPropValues } from "@/types/subject";
 import { readExcelData } from "@/utils/excel";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
+import useFilterCondition from "@/stores/zustand";
+import { useShallow } from "zustand/react/shallow";
 
 import { MdOutlineRadioButtonChecked } from "react-icons/md";
 import { MdOutlineRadioButtonUnchecked } from "react-icons/md";
+import { filterData } from "@/utils/filter";
 
 export default function SubjectSearchSection() {
+  const filter = useFilterCondition((state) => state.filter);
+
+  const setSubjectValues = useFilterCondition(
+    useShallow((state) => state.setSubjectValues)
+  );
+  const onClickQuery = async () => {
+    const data = await readExcelData("/sugang-data-20240124.xlsx");
+    console.log(data);
+    setSubjectValues(filterData(data, filter));
+  };
+
   return (
     <section className="flex flex-col gap-y-4">
       <SubjectFilterMenu />
       <div className="flex justify-end">
-        <button className="bg-pnuBlue text-white text-sm m-6 px-8 py-8 rounded-sm w-100">
+        <button
+          className="bg-pnuBlue text-white text-sm m-6 px-8 py-8 rounded-sm w-100"
+          onClick={onClickQuery}
+        >
           조회
         </button>
         <button className="bg-green-600 text-white text-sm m-6 px-8 py-8 rounded-sm w-100">
@@ -25,13 +42,25 @@ export default function SubjectSearchSection() {
 }
 
 function SubjectFilterMenu() {
-  const [univ, setUniv] = useState("대학");
-  const [searchMethod, setSearchMethod] = useState(0);
+  const { filter, setFilter } = useFilterCondition();
+  const [searchMethod, setSearchMethod] = useState(false);
 
-  const onClickSearchMethod = (id: number) => {
-    if (searchMethod !== id) {
-      setSearchMethod(id);
+  const onClickSearchMethod = (position: boolean) => {
+    if (searchMethod !== position) {
+      setSearchMethod(position);
     }
+  };
+
+  const onClickUniv = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilter({ ...filter, univ: e.target.value });
+  };
+
+  const onClickSubjectClass = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilter({ ...filter, subjectClass: e.target.value });
+  };
+
+  const onClickLiveralArtsClass = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setFilter({ ...filter, liveralArtsClass: Number(e.target.value) });
   };
 
   return (
@@ -42,8 +71,8 @@ function SubjectFilterMenu() {
           <td className="border border-slate-300 px-12" colSpan={3}>
             <select
               className="w-full border"
-              value={univ}
-              onChange={(e) => setUniv(e.target.value)}
+              value={filter.univ}
+              onChange={onClickUniv}
             >
               <option>대학</option>
               <option>대학원</option>
@@ -55,8 +84,8 @@ function SubjectFilterMenu() {
           <td className="border border-slate-300 px-12" colSpan={3}>
             <select
               className="w-full border"
-              value={univ}
-              onChange={(e) => setUniv(e.target.value)}
+              value={filter.univ}
+              onChange={onClickUniv}
             >
               <option>대학</option>
               <option>대학원</option>
@@ -68,9 +97,9 @@ function SubjectFilterMenu() {
           <td className="px-12 flex gap-x-16 items-center h-40" colSpan={3}>
             <div
               className="flex items-center gap-x-2"
-              onClick={() => onClickSearchMethod(0)}
+              onClick={() => onClickSearchMethod(false)}
             >
-              {searchMethod === 0 ? (
+              {!searchMethod ? (
                 <MdOutlineRadioButtonChecked />
               ) : (
                 <MdOutlineRadioButtonUnchecked />
@@ -79,9 +108,9 @@ function SubjectFilterMenu() {
             </div>
             <div
               className="flex items-center gap-x-2"
-              onClick={() => onClickSearchMethod(1)}
+              onClick={() => onClickSearchMethod(true)}
             >
-              {searchMethod === 1 ? (
+              {searchMethod ? (
                 <MdOutlineRadioButtonChecked />
               ) : (
                 <MdOutlineRadioButtonUnchecked />
@@ -90,21 +119,16 @@ function SubjectFilterMenu() {
             </div>
           </td>
         </tr>
-        {searchMethod === 0 ? (
+        {!searchMethod ? (
           <tr className="h-40">
             <SubjectLabel label="과목구분" />
             <td className="border border-slate-300 px-12" colSpan={3}>
-              <select className="w-full border">
-                <optgroup label="교양선택">
-                  <option>1영역: 사상과역사</option>
-                  <option>2영역: 사회와문화</option>
-                  <option>3영역: 문학과예술</option>
-                  <option>4영역: 과학과기술</option>
-                  <option>5영역: 건강과레포트</option>
-                  <option>6영역: 외국어</option>
-                  <option>7영역: 융복합</option>
-                  <option>8영역: 효원브릿지</option>
-                </optgroup>
+              <select
+                className="w-full border"
+                value={filter.subjectClass}
+                onChange={onClickSubjectClass}
+              >
+                <option>교양선택</option>
                 <option>교양필수</option>
                 <option>전공선택</option>
                 <option>전공필수</option>
@@ -120,12 +144,27 @@ function SubjectFilterMenu() {
             </td>
           </tr>
         )}
-        <tr className="h-40">
-          <SubjectLabel label="세부구분" />
-          <td className="border border-slate-300 px-12" colSpan={3}>
-            <input type="text" className="border focus:outline-none" />
-          </td>
-        </tr>
+        {filter.subjectClass === "교양선택" && (
+          <tr className="h-40">
+            <SubjectLabel label="세부구분" />
+            <td className="border border-slate-300 px-12" colSpan={3}>
+              <select
+                className="w-full border"
+                value={filter.liveralArtsClass}
+                onChange={onClickLiveralArtsClass}
+              >
+                <option value={1}>1영역: 사상과역사</option>
+                <option value={2}>2영역: 사회와문화</option>
+                <option value={3}>3영역: 문학과예술</option>
+                <option value={4}>4영역: 과학과기술</option>
+                <option value={5}>5영역: 건강과레포트</option>
+                <option value={6}>6영역: 외국어</option>
+                <option value={7}>7영역: 융복합</option>
+                <option value={8}>8영역: 효원브릿지</option>
+              </select>
+            </td>
+          </tr>
+        )}
         <tr className="h-40">
           <SubjectLabel label="핵심역량" />
           <td className="border border-slate-300 px-12">
@@ -156,23 +195,16 @@ function SubjectLabel({ label }: { label: string }) {
 }
 
 function SubjectSearchResult() {
-  const [subjectValues, setSubjectValues] = useState<
-    ExcelSubjectType[] | undefined
-  >([]);
-  useEffect(() => {
-    (async () => {
-      const data = await readExcelData("/sugang-data-20240124.xlsx");
-      console.log(data);
-      setSubjectValues(data);
-    })();
-  }, []);
+  const subjectValues = useFilterCondition(
+    useShallow((state) => state.subjectValues)
+  );
 
   return (
     <article className="relative">
       <div className="border-2 border-black w-[calc(100%-16px)] h-38 absolute top-0 z-20" />
       <div className="max-h-500 overflow-auto">
         <table className="w-full">
-          <thead className="bg-white w-full sticky top-0">
+          <thead className="bg-slate-200 w-full sticky top-0">
             <tr className="">
               <th className="border border-slate-300 text-sm px-16 tracking-wider">
                 NO
@@ -186,21 +218,29 @@ function SubjectSearchResult() {
             </tr>
           </thead>
           <tbody className="overflow-y-auto">
-            {subjectValues?.slice(1, 30).map((subject, vindex) => (
-              <Fragment key={vindex}>
-                <tr>
-                  <TCell key={vindex} value={vindex.toString()} />
-                  <td className="border border-slate-300 max-w-200 text-xs py-0 text-center mx-auto px-2">
-                    <button className="bg-green-600 text-white text-sm m-6 px-8 py-4 rounded-md text-nowrap">
-                      신청하기
-                    </button>
-                  </td>
-                  {subjectPropValues.map((prop, index) => (
-                    <TCell key={index} value={subject[prop as any]} />
-                  ))}
-                </tr>
-              </Fragment>
-            ))}
+            {subjectValues ? (
+              subjectValues.slice(1, 30).map((subject, vindex) => (
+                <Fragment key={vindex}>
+                  <tr>
+                    <TCell key={vindex} value={vindex.toString()} />
+                    <td className="border border-slate-300 max-w-200 text-xs py-0 text-center mx-auto px-2">
+                      <button className="bg-green-600 text-white text-sm m-6 px-8 py-4 rounded-md text-nowrap">
+                        신청하기
+                      </button>
+                    </td>
+                    {subjectPropValues.map((prop, index) => (
+                      <TCell key={index} value={subject[prop as any]} />
+                    ))}
+                  </tr>
+                </Fragment>
+              ))
+            ) : (
+              <tr className="h-40 text-center">
+                <td colSpan={11} className="border border-slate-300">
+                  조회된 데이터가 없습니다.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
