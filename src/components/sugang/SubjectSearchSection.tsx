@@ -1,14 +1,14 @@
 "use client";
 
-import { ExcelSubjectType, subjectPropValues } from "@/types/subject";
-import { readExcelData } from "@/utils/excel";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import useFilterCondition from "@/stores/zustand";
 import { useShallow } from "zustand/react/shallow";
 
 import { MdOutlineRadioButtonChecked } from "react-icons/md";
 import { MdOutlineRadioButtonUnchecked } from "react-icons/md";
+import { readExcelData } from "@/utils/excel";
 import { filterData } from "@/utils/filter";
+import { SubjectSearchResult } from "@/components/sugang/SubjectSearchResult";
 
 export default function SubjectSearchSection() {
   const filter = useFilterCondition((state) => state.filter);
@@ -16,9 +16,11 @@ export default function SubjectSearchSection() {
   const setSubjectValues = useFilterCondition(
     useShallow((state) => state.setSubjectValues)
   );
+
   const onClickQuery = async () => {
     const data = await readExcelData("/sugang-data-20240124.xlsx");
     console.log(data);
+    console.log(filterData(data, filter));
     setSubjectValues(filterData(data, filter));
   };
 
@@ -61,6 +63,12 @@ function SubjectFilterMenu() {
 
   const onClickLiveralArtsClass = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilter({ ...filter, liveralArtsClass: Number(e.target.value) });
+  };
+
+  const onClickNativeLanguageClass = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setFilter({ ...filter, nativeLanguageClass: e.target.value });
   };
 
   return (
@@ -175,7 +183,11 @@ function SubjectFilterMenu() {
           </td>
           <SubjectLabel label="원어강의" />
           <td className="border border-slate-300 px-12">
-            <select className="w-full border">
+            <select
+              className="w-full border"
+              value={filter.nativeLanguageClass}
+              onChange={onClickNativeLanguageClass}
+            >
               <option>Y</option>
               <option>N</option>
             </select>
@@ -190,76 +202,6 @@ function SubjectLabel({ label }: { label: string }) {
   return (
     <td className="bg-slate-100 text-center border border-slate-300 w-140 font-bold">
       <label>{label}</label>
-    </td>
-  );
-}
-
-function SubjectSearchResult() {
-  const subjectValues = useFilterCondition(
-    useShallow((state) => state.subjectValues)
-  );
-
-  return (
-    <article className="relative">
-      <div className="border-2 border-black w-[calc(100%-16px)] h-38 absolute top-0 z-20" />
-      <div className="max-h-500 overflow-auto">
-        <table className="w-full">
-          <thead className="bg-slate-200 w-full sticky top-0">
-            <tr className="">
-              <th className="border border-slate-300 text-sm px-16 tracking-wider">
-                NO
-              </th>
-              <th className="border border-slate-300 text-sm px-16 tracking-wider">
-                신청
-              </th>
-              {subjectPropValues.map((prop, index) => (
-                <THead key={index} value={prop} />
-              ))}
-            </tr>
-          </thead>
-          <tbody className="overflow-y-auto">
-            {subjectValues ? (
-              subjectValues.slice(1, 30).map((subject, vindex) => (
-                <Fragment key={vindex}>
-                  <tr>
-                    <TCell key={vindex} value={vindex.toString()} />
-                    <td className="border border-slate-300 max-w-200 text-xs py-0 text-center mx-auto px-2">
-                      <button className="bg-green-600 text-white text-sm m-6 px-8 py-4 rounded-md text-nowrap">
-                        신청하기
-                      </button>
-                    </td>
-                    {subjectPropValues.map((prop, index) => (
-                      <TCell key={index} value={subject[prop as any]} />
-                    ))}
-                  </tr>
-                </Fragment>
-              ))
-            ) : (
-              <tr className="h-40 text-center">
-                <td colSpan={11} className="border border-slate-300">
-                  조회된 데이터가 없습니다.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </article>
-  );
-}
-
-function THead({ value }: { value: string }) {
-  return (
-    <th className="border border-slate-300 text-sm px-16 py-8 text-nowrap tracking-wider">
-      <label>{value}</label>
-    </th>
-  );
-}
-
-function TCell({ value }: { value: string }) {
-  return (
-    <td className="border border-slate-300 max-w-200 text-xs py-4 text-center mx-auto px-8">
-      {value}
     </td>
   );
 }

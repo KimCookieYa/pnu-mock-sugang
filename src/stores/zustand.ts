@@ -14,7 +14,7 @@ const useFilterCondition = create<FilterCondition>((set) => ({
     univ: "대학",
     subjectClass: "교양선택",
     liveralArtsClass: 1,
-    remoteClass: false,
+    nativeLanguageClass: "Y",
   },
   setFilter: (filter) => set((state) => ({ ...state, filter })),
   subjectValues: [],
