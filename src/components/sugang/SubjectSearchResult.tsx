@@ -1,8 +1,10 @@
 import useApplySubject from "@/stores/apply";
 import useFilterCondition from "@/stores/zustand";
 import { ExcelSubjectType, subjectPropValues } from "@/types/subject";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
+import Portal from "../Portal";
+import LoadingSpinner from "../LoadingSpinner";
 
 export function SubjectSearchResult() {
   const subjectValues = useFilterCondition(
@@ -11,8 +13,14 @@ export function SubjectSearchResult() {
 
   const { addSubjectValues } = useApplySubject();
 
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
   const onAddSubject = (subject: ExcelSubjectType) => {
-    addSubjectValues(subject);
+    setIsOpenModal(true);
+    setTimeout(() => {
+      addSubjectValues(subject);
+      setIsOpenModal(false);
+    }, 2000);
   };
 
   return (
@@ -63,6 +71,11 @@ export function SubjectSearchResult() {
           </tbody>
         </table>
       </div>
+      {isOpenModal && (
+        <Portal isOpen={isOpenModal}>
+          <LoadingSpinner />
+        </Portal>
+      )}
     </article>
   );
 }

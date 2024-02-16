@@ -18,6 +18,7 @@ export default function RootLayout({
         <div id="root" className="relative">
           {children}
         </div>
+        <div id="modal-root" />
       </body>
     </html>
   );
