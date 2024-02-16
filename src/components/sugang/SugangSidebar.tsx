@@ -4,9 +4,9 @@ import { FaCalendarCheck } from "react-icons/fa";
 export default function SugangSidebar() {
   return (
     <>
-      <aside className="min-w-200 max-w-280 flex flex-col fixed h-screen">
+      <aside className="min-w-280 max-w-280 flex flex-col fixed h-screen">
         <ProfileBlock />
-        <div className="flex flex-col gap-y-4 h-fit p-16 bg-pnuBgGray border-b border-2">
+        <div className="flex flex-col gap-y-4 h-fit p-16 bg-slate-100 border-b border-2">
           <ScheduleBlock />
           <RestBlock />
         </div>
