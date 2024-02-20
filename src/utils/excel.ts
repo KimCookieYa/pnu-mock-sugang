@@ -1,4 +1,4 @@
-import { ExcelSubjectType } from "@/types/subject";
+import { ExcelSubjectType, SubjectType } from "@/types/subject";
 import axios from "axios";
 import * as XLSX from "xlsx";
 
@@ -26,7 +26,7 @@ async function fetchExcelFile(url: string) {
 
 export async function readExcelData(
   url: string
-): Promise<ExcelSubjectType[] | undefined> {
+): Promise<SubjectType[] | undefined> {
   const workbook = await fetchExcelFile(url);
   if (!workbook) return;
 

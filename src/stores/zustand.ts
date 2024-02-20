@@ -1,12 +1,12 @@
 import { Filter } from "@/types/filter";
-import { ExcelSubjectType } from "@/types/subject";
+import { ExcelSubjectType, SubjectType } from "@/types/subject";
 import { create } from "zustand";
 
 interface FilterCondition {
   filter: Filter;
   setFilter: (filter: Filter) => void;
-  subjectValues: ExcelSubjectType[] | undefined;
-  setSubjectValues: (subjectValues: ExcelSubjectType[] | undefined) => void;
+  subjectValues: SubjectType[] | undefined;
+  setSubjectValues: (subjectValues: SubjectType[] | undefined) => void;
   resetSubjectValues: () => void;
 }
 

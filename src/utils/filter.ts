@@ -1,16 +1,13 @@
 import { Filter } from "@/types/filter";
-import { ExcelSubjectType } from "@/types/subject";
+import { ExcelSubjectType, SubjectType } from "@/types/subject";
 
-export function filterData(
-  data: ExcelSubjectType[] | undefined,
-  filter: Filter
-) {
+export function filterData(data: SubjectType[] | undefined, filter: Filter) {
   if (!data) {
     return undefined;
   }
 
   const { univ, subjectClass, nativeLanguageClass, searchText } = filter;
-  let filteredData: ExcelSubjectType[] = data.filter((subject) => {
+  let filteredData: SubjectType[] = data.filter((subject) => {
     if (searchText) {
       if (subject[ExcelSubjectType.subjectName as any].includes(searchText)) {
         return true;

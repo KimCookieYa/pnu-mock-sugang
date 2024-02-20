@@ -1,31 +1,20 @@
-import useApplySubject from "@/stores/apply";
 import useFilterCondition from "@/stores/zustand";
-import { ExcelSubjectType, subjectPropValues } from "@/types/subject";
+import {
+  ExcelSubjectType,
+  SubjectType,
+  subjectPropValues,
+} from "@/types/subject";
 import { Fragment, useEffect, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import Portal from "../Portal";
 import LoadingSpinner from "../LoadingSpinner";
 import { generateRandomDelay } from "@/utils/util";
 import { usePathname } from "next/navigation";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export function SubjectSearchResult() {
-  const { addSubjectValues, resetSubjectValues, resetDesiredSubjectValues } =
-    useApplySubject();
   const pathname = usePathname();
-  useEffect(() => {
-    if (pathname === "/register") {
-      resetSubjectValues();
-    } else if (pathname === "/desired") {
-      resetDesiredSubjectValues();
-    }
-  }, [pathname]);
-
-  useEffect(() => {
-    return () => {
-      resetSubjectValues();
-      resetDesiredSubjectValues();
-    };
-  }, []);
+  const { storedValue, setValue } = useLocalStorage("subject", []);
 
   const subjectValues = useFilterCondition(
     useShallow((state) => state.subjectValues)
@@ -33,12 +22,12 @@ export function SubjectSearchResult() {
 
   const [isOpenModal, setIsOpenModal] = useState(false);
 
-  const onAddSubject = (subject: ExcelSubjectType) => {
-    setIsOpenModal(true);
-    setTimeout(() => {
-      addSubjectValues(subject);
-      setIsOpenModal(false);
-    }, generateRandomDelay());
+  const onSaveSubject = (subject: SubjectType) => {
+    setValue([...storedValue, subject]);
+    // setIsOpenModal(true);
+    // setTimeout(() => {
+    //   setIsOpenModal(false);
+    // }, generateRandomDelay());
   };
 
   return (
@@ -68,13 +57,16 @@ export function SubjectSearchResult() {
                     <td className="border border-slate-300 max-w-200 text-xs py-0 text-center mx-auto px-2">
                       <button
                         className="border-green-600 border text-green-600 bg-white text-sm m-6 px-8 py-4 rounded-md text-nowrap"
-                        onClick={() => onAddSubject(subject)}
+                        onClick={() => onSaveSubject(subject)}
                       >
                         신청하기
                       </button>
                     </td>
                     {subjectPropValues.map((prop, index) => (
-                      <TCell key={index} value={subject[prop as any]} />
+                      <TCell
+                        key={index}
+                        value={subject[prop as keyof SubjectType]}
+                      />
                     ))}
                   </tr>
                 </Fragment>

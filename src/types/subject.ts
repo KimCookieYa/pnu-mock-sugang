@@ -35,22 +35,22 @@ export enum ExcelSubjectType {
 export type ExcelSubjectTypeProp = keyof typeof ExcelSubjectType;
 
 export interface SubjectType {
-  univName: string;
-  subjectName: string;
-  subjectCode: string;
-  roomId: string;
+  대학명: string;
+  교과목명: string;
+  교과목코드: string;
+  분반: string;
   groupClass: string;
-  subjectClass: string;
-  credit: string;
-  theory: string;
-  practice: string;
-  maxNum: string;
-  professor: string;
-  departmentName: string;
-  liveralArtsClass: string;
-  nativeLanguageClass: string;
-  timetable: string;
-  note: string;
-  schoolYear: string;
-  remoteClass: string;
+  교과구분: string;
+  학점: string;
+  이론: string;
+  실습: string;
+  제한인원: string;
+  담당교수: string;
+  개설학과: string;
+  교양영역명: string;
+  원어강의: string;
+  시간표: string;
+  비고: string;
+  학년: string;
+  원격수업: string;
 }

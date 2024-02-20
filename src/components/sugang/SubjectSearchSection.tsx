@@ -1,30 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import useFilterCondition from "@/stores/zustand";
-import { useShallow } from "zustand/react/shallow";
 
 import { MdOutlineRadioButtonChecked } from "react-icons/md";
 import { MdOutlineRadioButtonUnchecked } from "react-icons/md";
 import { readExcelData } from "@/utils/excel";
 import { filterData } from "@/utils/filter";
 import { SubjectSearchResult } from "@/components/sugang/SubjectSearchResult";
+import { useEffect, useState } from "react";
 
 export default function SubjectSearchSection() {
-  const { filter, resetSubjectValues } = useFilterCondition();
-
-  const setSubjectValues = useFilterCondition(
-    useShallow((state) => state.setSubjectValues)
-  );
+  const { filter, setSubjectValues, resetSubjectValues } = useFilterCondition();
 
   const onClickQuery = async () => {
     const data = await readExcelData("/sugang-data-20240124.xlsx");
     setSubjectValues(filterData(data, filter));
   };
-
-  useEffect(() => {
-    return () => resetSubjectValues();
-  }, []);
 
   return (
     <section className="flex flex-col gap-y-4">
