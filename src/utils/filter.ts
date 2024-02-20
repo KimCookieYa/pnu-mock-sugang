@@ -9,27 +9,22 @@ export function filterData(data: SubjectType[] | undefined, filter: Filter) {
   const { univ, subjectClass, nativeLanguageClass, searchText } = filter;
   let filteredData: SubjectType[] = data.filter((subject) => {
     if (searchText) {
-      if (subject[ExcelSubjectType.subjectName as any].includes(searchText)) {
+      if (subject.교과목명.includes(searchText)) {
         return true;
       }
       return false;
     }
 
-    if (!subject[ExcelSubjectType.univName as any].includes(univ)) {
+    if (!subject.대학명.includes(univ)) {
       return false;
-    } else if (subject[ExcelSubjectType.subjectClass as any] !== subjectClass) {
+    } else if (subject.교과구분 !== subjectClass) {
       return false;
-    } else if (
-      nativeLanguageClass === "N" &&
-      subject[ExcelSubjectType.nativeLanguageClass as any] === "Y"
-    ) {
+    } else if (nativeLanguageClass === "N" && subject.원어강의 === "Y") {
       return false;
     } else {
       if (
         subjectClass === "교양선택" &&
-        !subject[ExcelSubjectType.liveralArtsClass as any].includes(
-          filter.liveralArtsClass.toString()
-        )
+        !subject.교양영역명.includes(filter.liveralArtsClass.toString())
       ) {
         return false;
       }
