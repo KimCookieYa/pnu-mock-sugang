@@ -33,7 +33,7 @@ export default function SubjectApplyResultSection() {
                 NO
               </th>
               <th className="border border-slate-300 text-sm px-16 tracking-wider">
-                놓기
+                제거
               </th>
               {subjectPropValues.map((prop, index) => (
                 <THead key={index} value={prop} />

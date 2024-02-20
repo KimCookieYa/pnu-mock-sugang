@@ -44,3 +44,11 @@ export function getDesiredSubjects() {
   }
   return undefined;
 }
+
+export function calCreditSum(subjects: SubjectType[]) {
+  let sum = 0;
+  subjects.forEach((subject) => {
+    sum += Number(subject.학점);
+  });
+  return sum;
+}

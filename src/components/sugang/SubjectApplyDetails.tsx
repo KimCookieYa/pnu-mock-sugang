@@ -1,8 +1,14 @@
 "use client";
 
+import useLocalStorage from "@/hooks/useLocalStorage";
 import SubjectApplyResultSection from "./SubjectApplyResultSection";
+import { usePathname } from "next/navigation";
+import { calCreditSum } from "@/utils/subject";
 
 export default function SubjectApplyDetails() {
+  const pathname = usePathname();
+  const { storedValue } = useLocalStorage(pathname.slice(1), []);
+
   return (
     <div className="flex flex-col gap-y-4 mt-20">
       <nav>
@@ -17,6 +23,20 @@ export default function SubjectApplyDetails() {
           <li className="w-full border-b border-pnuBlue" />
         </ul>
       </nav>
+      <div className="flex gap-x-2 ml-10 text-sm">
+        <label>신청과목수</label>
+        <span className="text-pnuLightBlue font-bold">
+          {storedValue?.length}
+        </span>
+        <span>건 /</span>
+        <label>신청학점</label>
+        <span className="text-pnuLightBlue font-bold">
+          {calCreditSum(storedValue)}
+        </span>
+        <span>/</span>
+        <label>신청가능학점</label>
+        <span className="text-pnuLightBlue font-bold">99999.0</span>
+      </div>
       <SubjectApplyResultSection />
     </div>
   );
