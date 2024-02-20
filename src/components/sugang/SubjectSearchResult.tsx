@@ -5,6 +5,7 @@ import { Fragment, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import Portal from "../Portal";
 import LoadingSpinner from "../LoadingSpinner";
+import { generateRandomDelay } from "@/utils/util";
 
 export function SubjectSearchResult() {
   const subjectValues = useFilterCondition(
@@ -20,7 +21,7 @@ export function SubjectSearchResult() {
     setTimeout(() => {
       addSubjectValues(subject);
       setIsOpenModal(false);
-    }, 2000);
+    }, generateRandomDelay());
   };
 
   return (

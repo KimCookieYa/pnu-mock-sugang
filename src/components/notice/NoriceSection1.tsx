@@ -1,6 +1,7 @@
 "use client";
 
 import { noticeData } from "@/datas/notice-data";
+import { generateRandomDelay } from "@/utils/util";
 import { useRouter } from "next/navigation";
 import { Fragment, useState } from "react";
 
@@ -21,7 +22,7 @@ export default function NoticeSection1() {
 
     setTimeout(() => {
       router.push("/register");
-    }, 3000);
+    }, generateRandomDelay());
   };
 
   return (
