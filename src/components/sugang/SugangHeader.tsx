@@ -11,7 +11,7 @@ export default function SugangHeader() {
       <header className="flex bg-pnuBlue h-45 items-center px-16 fixed top-0 left-0 right-0 w-full z-[10000]">
         <TitleLogo />
         <nav>
-          <ul className="flex gap-x-12 ml-100">
+          <ul className="hidden sm:flex gap-x-12 ml-100">
             <li
               className={
                 pathname === "/register"

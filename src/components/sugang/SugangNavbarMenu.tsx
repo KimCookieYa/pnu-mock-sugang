@@ -31,7 +31,7 @@ export default function SugangNavbarMenu() {
             <li
               key={menu.id}
               className={[
-                "w-200 h-50 cursor-pointer rounded-tl-md rounded-tr-md justify-center items-center flex",
+                "w-fit px-20 h-50 cursor-pointer rounded-tl-md rounded-tr-md justify-center items-center flex  text-nowrap",
                 currentTab === menu.id
                   ? "border-t border-l border-r border-pnuBlue"
                   : "border-b border-pnuBlue",

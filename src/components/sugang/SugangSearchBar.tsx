@@ -44,30 +44,34 @@ export default function SugangSearchBar() {
   };
 
   return (
-    <form className="flex border w-full">
-      <label className="text-pnuText m-8 w-100 flex justify-center items-center">
-        교과목번호
-      </label>
-      <div className="border p-4 flex justify-center">
-        <input
-          ref={courseCodeRef}
-          type="text"
-          className="border focus:outline-none"
-        />
+    <form className="flex flex-col sm:flex-row border w-full items-center">
+      <div className="flex">
+        <label className="text-pnuText m-8 w-100 flex justify-center items-center text-nowrap">
+          교과목번호
+        </label>
+        <div className="border p-4 flex justify-center">
+          <input
+            ref={courseCodeRef}
+            type="text"
+            className="border focus:outline-none"
+          />
+        </div>
       </div>
-      <label className="text-pnuText m-8 w-100 flex justify-center items-center">
-        분반
-      </label>
-      <div className="border p-4 flex justify-center">
-        <input
-          ref={courseRoomIdRef}
-          type="text"
-          className="border focus:outline-none"
-        />
+      <div className="flex">
+        <label className="text-pnuText m-8 w-100 flex justify-center items-center text-nowrap">
+          분반
+        </label>
+        <div className="border p-4 flex justify-center">
+          <input
+            ref={courseRoomIdRef}
+            type="text"
+            className="border focus:outline-none"
+          />
+        </div>
       </div>
       <div className="flex justify-center">
         <button
-          className="bg-pnuWarn text-white text-sm m-6 px-8 py-4 rounded-md"
+          className="bg-pnuWarn text-white text-sm m-6 px-8 py-4 rounded-md text-nowrap"
           onClick={onSubmitInput}
         >
           {pathname === "/register" ? "빠른 수강신청" : "빠른 담기"}

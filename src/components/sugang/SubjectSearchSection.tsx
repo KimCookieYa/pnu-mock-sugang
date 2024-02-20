@@ -20,7 +20,7 @@ export default function SubjectSearchSection() {
   };
 
   return (
-    <section className="flex flex-col gap-y-4">
+    <section className="flex flex-col gap-y-4 text-nowrap">
       <SubjectFilterMenu />
       <div className="flex justify-end items-center">
         <div className="flex mx-auto">
@@ -114,7 +114,10 @@ function SubjectFilterMenu() {
         </tr>
         <tr className="h-40">
           <SubjectLabel label="검색방법" />
-          <td className="px-12 flex gap-x-16 items-center h-40" colSpan={3}>
+          <td
+            className="px-12 items-start flex-col sm:flex-row flex gap-x-16 sm:items-center min-h-40"
+            colSpan={3}
+          >
             <div
               className="flex items-center gap-x-2"
               onClick={() => onClickSearchMethod(false)}
@@ -192,13 +195,6 @@ function SubjectFilterMenu() {
           </tr>
         )}
         <tr className="h-40">
-          <SubjectLabel label="핵심역량" />
-          <td className="border border-slate-300 px-12">
-            <select className="w-full border">
-              <option>Y</option>
-              <option>N</option>
-            </select>
-          </td>
           <SubjectLabel label="원어강의" />
           <td className="border border-slate-300 px-12">
             <select
@@ -206,6 +202,13 @@ function SubjectFilterMenu() {
               value={filter.nativeLanguageClass}
               onChange={onClickNativeLanguageClass}
             >
+              <option>Y</option>
+              <option>N</option>
+            </select>
+          </td>
+          <SubjectLabel label="핵심역량" />
+          <td className="border border-slate-300 px-12">
+            <select className="w-full border">
               <option>Y</option>
               <option>N</option>
             </select>
