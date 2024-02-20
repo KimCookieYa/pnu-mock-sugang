@@ -5,18 +5,26 @@ import { generateRandomDelay } from "@/utils/util";
 import { usePathname } from "next/navigation";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import useLoading from "@/stores/loading";
+import useAlert from "@/stores/alert";
 
 export function SubjectSearchResult() {
   const pathname = usePathname();
   const { storedValue, setValue } = useLocalStorage(pathname.slice(1), []);
   const { subjectValues } = useFilterCondition();
   const { setIsLoading } = useLoading();
+  const { setMessage } = useAlert();
 
   const onSaveSubject = (subject: SubjectType) => {
     setIsLoading(true);
     setTimeout(() => {
       setValue([...storedValue, subject]);
       setIsLoading(false);
+      setMessage("register", {
+        message: `${subject.교과목명}(${subject.분반}분반)이 ${
+          pathname === "/register" ? "수강신청" : "희망과목담기"
+        } 완료되었습니다!`,
+        subject: subject,
+      });
     }, generateRandomDelay());
   };
 

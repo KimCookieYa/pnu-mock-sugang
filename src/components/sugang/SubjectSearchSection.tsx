@@ -7,11 +7,13 @@ import { MdOutlineRadioButtonUnchecked } from "react-icons/md";
 import { readExcelData } from "@/utils/excel";
 import { filterData } from "@/utils/filter";
 import { SubjectSearchResult } from "@/components/sugang/SubjectSearchResult";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useAlert from "@/stores/alert";
 
 export default function SubjectSearchSection() {
   const { filter, setSubjectValues } = useFilterCondition();
-
+  const { type, data } = useAlert();
+  console.log(data);
   const onClickQuery = async () => {
     const data = await readExcelData("/sugang-data-20240124.xlsx");
     setSubjectValues(filterData(data, filter));
@@ -20,7 +22,21 @@ export default function SubjectSearchSection() {
   return (
     <section className="flex flex-col gap-y-4">
       <SubjectFilterMenu />
-      <div className="flex justify-end">
+      <div className="flex justify-end items-center">
+        <div className="flex mx-auto">
+          {type !== "normal" && data && (
+            <p
+              className={[
+                "mr-40",
+                type === "remove" && "text-red-500",
+                type === "register" && "text-pnuLightBlue",
+                type === "none" && "text-black",
+              ].join(" ")}
+            >
+              {data.message}
+            </p>
+          )}
+        </div>
         <button
           className="bg-pnuBlue text-white text-sm m-6 px-8 py-8 rounded-sm w-100"
           onClick={onClickQuery}

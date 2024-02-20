@@ -1,6 +1,7 @@
 "use client";
 
 import useLocalStorage from "@/hooks/useLocalStorage";
+import useAlert from "@/stores/alert";
 import useLoading from "@/stores/loading";
 import { readExcelData } from "@/utils/excel";
 import { generateRandomDelay } from "@/utils/util";
@@ -13,6 +14,7 @@ export default function SugangSearchBar() {
   const { setIsLoading } = useLoading();
   const courseCodeRef = useRef<HTMLInputElement>(null);
   const courseRoomIdRef = useRef<HTMLInputElement>(null);
+  const { setMessage } = useAlert();
 
   const onSubmitInput = async () => {
     const data = await readExcelData("/sugang-data-20240124.xlsx");
@@ -27,6 +29,10 @@ export default function SugangSearchBar() {
       setTimeout(() => {
         setValue([...storedValue, subject]);
         setIsLoading(false);
+        setMessage("register", {
+          message: `${subject.교과목명}(${subject.분반}분반)이 수강신청 완료되었습니다!`,
+          subject: subject,
+        });
       }, generateRandomDelay());
     } else {
       alert("해당 과목이 존재하지 않습니다!");

@@ -1,15 +1,16 @@
 "use client";
 
 import useLocalStorage from "@/hooks/useLocalStorage";
+import useAlert from "@/stores/alert";
 import { SubjectType, subjectPropValues } from "@/types/subject";
 import { usePathname } from "next/navigation";
 
 export default function SubjectApplyResultSection() {
   const pathname = usePathname();
   const { storedValue, setValue } = useLocalStorage(pathname.slice(1), []);
+  const { setMessage } = useAlert();
 
   const onRemoveSubject = (value: SubjectType) => {
-    console.log(value);
     const filteredValue = storedValue?.filter((subject) => {
       if (subject.교과목코드 + subject.분반 !== value.교과목코드 + value.분반) {
         console.log(subject);
@@ -18,8 +19,13 @@ export default function SubjectApplyResultSection() {
         return false;
       }
     });
-    console.log(filteredValue);
     setValue(filteredValue);
+    setMessage("remove", {
+      subject: value,
+      message: `${value.교과목명}(${value.분반}분반)이 ${
+        pathname === "/register" ? "수강신청" : "희망과목담기"
+      }에서 제거되었습니다`,
+    });
   };
 
   return (
