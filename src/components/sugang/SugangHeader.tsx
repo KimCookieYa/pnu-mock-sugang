@@ -32,6 +32,15 @@ export default function SugangHeader() {
             </li>
             <li className="text-lg text-white">학생기본정보</li>
             <li className="text-lg text-white">게시판</li>
+            <li
+              className={
+                pathname === "/desired"
+                  ? "text-lg text-green-300 underline font-bold"
+                  : "text-lg text-white"
+              }
+            >
+              <Link href="/desired">희망과목담기</Link>
+            </li>
           </ul>
         </nav>
       </header>

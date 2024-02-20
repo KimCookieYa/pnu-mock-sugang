@@ -7,6 +7,7 @@ interface FilterCondition {
   setFilter: (filter: Filter) => void;
   subjectValues: ExcelSubjectType[] | undefined;
   setSubjectValues: (subjectValues: ExcelSubjectType[] | undefined) => void;
+  resetSubjectValues: () => void;
 }
 
 const useFilterCondition = create<FilterCondition>((set) => ({
@@ -21,6 +22,7 @@ const useFilterCondition = create<FilterCondition>((set) => ({
   subjectValues: [],
   setSubjectValues: (subjectValues) =>
     set((state) => ({ ...state, subjectValues })),
+  resetSubjectValues: () => set((state) => ({ ...state, subjectValues: [] })),
 }));
 
 export default useFilterCondition;

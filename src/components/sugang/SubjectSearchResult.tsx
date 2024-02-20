@@ -1,18 +1,35 @@
 import useApplySubject from "@/stores/apply";
 import useFilterCondition from "@/stores/zustand";
 import { ExcelSubjectType, subjectPropValues } from "@/types/subject";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import Portal from "../Portal";
 import LoadingSpinner from "../LoadingSpinner";
 import { generateRandomDelay } from "@/utils/util";
+import { usePathname } from "next/navigation";
 
 export function SubjectSearchResult() {
+  const { addSubjectValues, resetSubjectValues, resetDesiredSubjectValues } =
+    useApplySubject();
+  const pathname = usePathname();
+  useEffect(() => {
+    if (pathname === "/register") {
+      resetSubjectValues();
+    } else if (pathname === "/desired") {
+      resetDesiredSubjectValues();
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    return () => {
+      resetSubjectValues();
+      resetDesiredSubjectValues();
+    };
+  }, []);
+
   const subjectValues = useFilterCondition(
     useShallow((state) => state.subjectValues)
   );
-
-  const { addSubjectValues } = useApplySubject();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -50,7 +67,7 @@ export function SubjectSearchResult() {
                     <TCell key={vindex} value={vindex.toString()} />
                     <td className="border border-slate-300 max-w-200 text-xs py-0 text-center mx-auto px-2">
                       <button
-                        className="bg-green-600 text-white text-sm m-6 px-8 py-4 rounded-md text-nowrap"
+                        className="border-green-600 border text-green-600 bg-white text-sm m-6 px-8 py-4 rounded-md text-nowrap"
                         onClick={() => onAddSubject(subject)}
                       >
                         신청하기
@@ -91,7 +108,7 @@ function THead({ value }: { value: string }) {
 
 function TCell({ value }: { value: string }) {
   return (
-    <td className="border border-slate-300 max-w-200 text-xs py-4 text-center mx-auto px-8">
+    <td className="border border-slate-300 max-w-200 text-sm py-10 text-center mx-auto px-8">
       {value}
     </td>
   );

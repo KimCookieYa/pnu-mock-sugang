@@ -5,9 +5,11 @@ interface ApplySubject {
   subjectValues: ExcelSubjectType[];
   addSubjectValues: (value: ExcelSubjectType) => void;
   removeSubjectValues: (value: ExcelSubjectType) => void;
+  resetSubjectValues: () => void;
   desiredSubjectValues: ExcelSubjectType[];
   addDesiredSubjectValues: (value: ExcelSubjectType) => void;
   removeDesiredSubjectValues: (value: ExcelSubjectType) => void;
+  resetDesiredSubjectValues: () => void;
 }
 
 const useApplySubject = create<ApplySubject>((set) => ({
@@ -24,6 +26,7 @@ const useApplySubject = create<ApplySubject>((set) => ({
         (v) => v["교과목명" as any] !== value["교과목명" as any]
       ),
     })),
+  resetSubjectValues: () => set((state) => ({ ...state, subjectValues: [] })),
   desiredSubjectValues: [],
   addDesiredSubjectValues: (value) =>
     set((state) => ({
@@ -37,6 +40,8 @@ const useApplySubject = create<ApplySubject>((set) => ({
         (v) => v["교과목명" as any] !== value["교과목명" as any]
       ),
     })),
+  resetDesiredSubjectValues: () =>
+    set((state) => ({ ...state, desiredSubjectValues: [] })),
 }));
 
 export default useApplySubject;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useFilterCondition from "@/stores/zustand";
 import { useShallow } from "zustand/react/shallow";
 
@@ -11,7 +11,7 @@ import { filterData } from "@/utils/filter";
 import { SubjectSearchResult } from "@/components/sugang/SubjectSearchResult";
 
 export default function SubjectSearchSection() {
-  const filter = useFilterCondition((state) => state.filter);
+  const { filter, resetSubjectValues } = useFilterCondition();
 
   const setSubjectValues = useFilterCondition(
     useShallow((state) => state.setSubjectValues)
@@ -21,6 +21,10 @@ export default function SubjectSearchSection() {
     const data = await readExcelData("/sugang-data-20240124.xlsx");
     setSubjectValues(filterData(data, filter));
   };
+
+  useEffect(() => {
+    return () => resetSubjectValues();
+  }, []);
 
   return (
     <section className="flex flex-col gap-y-4">

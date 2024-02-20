@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import DesiredSubjectTable from "@/components/sugang/DesiredSubjectTable";
 import SubjectSearchSection from "@/components/sugang/SubjectSearchSection";
+import DesiredSubjectSection from "@/components/desired/DesiredSubjectSection";
 
 const sugangMenu = [
   { label: "희망과목담기", id: 0 },
@@ -44,7 +44,7 @@ export default function SugangNavbarMenu() {
           <li className="w-full border-b border-pnuBlue"></li>
         </ul>
       </nav>
-      {currentTab === 0 && <DesiredSubjectTable />}
+      {currentTab === 0 && <DesiredSubjectSection />}
       {currentTab === 1 && <SubjectSearchSection />}
     </div>
   );

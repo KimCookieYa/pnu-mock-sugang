@@ -2,8 +2,7 @@
 
 import useApplySubject from "@/stores/apply";
 import { ExcelSubjectType, subjectPropValues } from "@/types/subject";
-import { Fragment } from "react";
-import { useShallow } from "zustand/react/shallow";
+import { Fragment, useEffect, useState } from "react";
 
 export default function SubjectApplyDetails() {
   return (
@@ -26,6 +25,7 @@ export default function SubjectApplyDetails() {
 }
 
 function ApplyDetailsTable() {
+  const [dummyState, setDummyState] = useState(false);
   const { subjectValues, removeSubjectValues } = useApplySubject(
     (state) => state
   );
@@ -33,6 +33,10 @@ function ApplyDetailsTable() {
   const onRemoveSubject = (value: ExcelSubjectType) => {
     removeSubjectValues(value);
   };
+
+  useEffect(() => {
+    setDummyState((prev) => !prev);
+  }, [subjectValues.length]);
 
   return (
     <article className="relative">
@@ -60,7 +64,7 @@ function ApplyDetailsTable() {
                     <TCell key={vindex} value={vindex.toString()} />
                     <td className="border border-slate-300 max-w-200 text-xs py-0 text-center mx-auto px-2">
                       <button
-                        className="bg-red-600 text-white text-sm m-6 px-8 py-4 rounded-md text-nowrap"
+                        className="border-red-600 border text-red-600 bg-white text-sm m-6 px-8 py-4 rounded-md text-nowrap"
                         onClick={() => onRemoveSubject(subject)}
                       >
                         제거하기
@@ -96,7 +100,7 @@ function THead({ value }: { value: string }) {
 
 function TCell({ value }: { value: string }) {
   return (
-    <td className="border border-slate-300 max-w-200 text-xs py-4 text-center mx-auto px-8">
+    <td className="border border-slate-300 max-w-200 text-sm py-4 text-center mx-auto px-8">
       {value}
     </td>
   );
