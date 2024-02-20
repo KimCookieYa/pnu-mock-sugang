@@ -2,9 +2,11 @@
 
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { SubjectType, subjectPropValues } from "@/types/subject";
+import { usePathname } from "next/navigation";
 
 export default function SubjectApplyResultSection() {
-  const { storedValue, setValue } = useLocalStorage("subject", []);
+  const pathname = usePathname();
+  const { storedValue, setValue } = useLocalStorage(pathname.slice(1), []);
 
   const onRemoveSubject = (value: SubjectType) => {
     console.log(value);
@@ -31,7 +33,7 @@ export default function SubjectApplyResultSection() {
                 NO
               </th>
               <th className="border border-slate-300 text-sm px-16 tracking-wider">
-                신청
+                제거
               </th>
               {subjectPropValues.map((prop, index) => (
                 <THead key={index} value={prop} />

@@ -14,7 +14,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 
 export function SubjectSearchResult() {
   const pathname = usePathname();
-  const { storedValue, setValue } = useLocalStorage("subject", []);
+  const { storedValue, setValue } = useLocalStorage(pathname.slice(1), []);
 
   const subjectValues = useFilterCondition(
     useShallow((state) => state.subjectValues)
@@ -33,7 +33,7 @@ export function SubjectSearchResult() {
   return (
     <article className="relative">
       <div className="border-2 border-black w-[calc(100%-16px)] h-38 absolute top-0 z-20" />
-      <div className="max-h-500 overflow-auto">
+      <div className="max-h-400 overflow-auto border-2 border-black">
         <table className="w-full">
           <thead className="bg-slate-200 w-full sticky top-0">
             <tr className="">

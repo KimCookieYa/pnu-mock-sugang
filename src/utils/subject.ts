@@ -1,11 +1,11 @@
-import { ExcelSubjectType } from "@/types/subject";
+import { SubjectType } from "@/types/subject";
 import { getLocalStorage, setLocalStorage } from "./localstorage";
 
 interface LocalStorageSubject {
-  data: ExcelSubjectType[];
+  data: SubjectType[];
 }
 
-export function saveSubject(subject: ExcelSubjectType) {
+export function saveSubject(subject: SubjectType) {
   const strSubjects = getLocalStorage("subjects");
   if (strSubjects) {
     const jsonSubjects = JSON.parse(strSubjects) as LocalStorageSubject;
@@ -16,7 +16,7 @@ export function saveSubject(subject: ExcelSubjectType) {
   return false;
 }
 
-export function saveSubjects(subjects: ExcelSubjectType[]) {
+export function saveSubjects(subjects: SubjectType[]) {
   setLocalStorage("subjects", JSON.stringify({ data: subjects }));
 }
 
@@ -24,12 +24,12 @@ export function getSubjects() {
   const strSubjects = getLocalStorage("subjects");
   if (strSubjects) {
     const jsonSubjects = JSON.parse(strSubjects) as LocalStorageSubject;
-    return jsonSubjects.data;
+    return jsonSubjects;
   }
   return [];
 }
 
-export function saveDesiredSubject(subject: ExcelSubjectType) {
+export function saveDesiredSubject(subject: SubjectType) {
   const strSubjects = getLocalStorage("desired");
   if (strSubjects) {
     const jsonSubjects = JSON.parse(strSubjects) as LocalStorageSubject;
@@ -44,7 +44,7 @@ export function getDesiredSubjects() {
   const strSubjects = getLocalStorage("desired");
   if (strSubjects) {
     const jsonSubjects = JSON.parse(strSubjects) as LocalStorageSubject;
-    return jsonSubjects.data;
+    return jsonSubjects;
   }
   return [];
 }
