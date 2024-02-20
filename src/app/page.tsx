@@ -12,10 +12,10 @@ export default function Home() {
         </h2>
         <form className="shadow-[0_0_8px_2px_rgba(0,0,0,0.2)] rounded min-w-600 py-60 gap-x-4 flex justify-center">
           <div className="flex flex-col gap-y-4">
-            <HomeInput label="ID" placeholder="학번" type="text" />
+            <HomeInput label="ID" placeholder="학번 필요없음" type="text" />
             <HomeInput
               label="Password"
-              placeholder="비밀번호"
+              placeholder="비밀번호 필요없음"
               type="password"
             />
             <div className="flex gap-x-4">
