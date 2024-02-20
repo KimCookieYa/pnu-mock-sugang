@@ -1,33 +1,23 @@
 import useFilterCondition from "@/stores/zustand";
-import {
-  ExcelSubjectType,
-  SubjectType,
-  subjectPropValues,
-} from "@/types/subject";
-import { Fragment, useEffect, useState } from "react";
-import { useShallow } from "zustand/react/shallow";
-import Portal from "../Portal";
-import LoadingSpinner from "../LoadingSpinner";
+import { SubjectType, subjectPropValues } from "@/types/subject";
+import { Fragment } from "react";
 import { generateRandomDelay } from "@/utils/util";
 import { usePathname } from "next/navigation";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import useLoading from "@/stores/loading";
 
 export function SubjectSearchResult() {
   const pathname = usePathname();
   const { storedValue, setValue } = useLocalStorage(pathname.slice(1), []);
-
-  const subjectValues = useFilterCondition(
-    useShallow((state) => state.subjectValues)
-  );
-
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const { subjectValues } = useFilterCondition();
+  const { setIsLoading } = useLoading();
 
   const onSaveSubject = (subject: SubjectType) => {
-    setValue([...storedValue, subject]);
-    // setIsOpenModal(true);
-    // setTimeout(() => {
-    //   setIsOpenModal(false);
-    // }, generateRandomDelay());
+    setIsLoading(true);
+    setTimeout(() => {
+      setValue([...storedValue, subject]);
+      setIsLoading(false);
+    }, generateRandomDelay());
   };
 
   return (
@@ -59,7 +49,7 @@ export function SubjectSearchResult() {
                         className="border-green-600 border text-green-600 bg-white text-sm m-6 px-8 py-4 rounded-md text-nowrap"
                         onClick={() => onSaveSubject(subject)}
                       >
-                        신청하기
+                        {pathname === "/register" ? "신청하기" : "담기"}
                       </button>
                     </td>
                     {subjectPropValues.map((prop, index) => (
@@ -81,11 +71,6 @@ export function SubjectSearchResult() {
           </tbody>
         </table>
       </div>
-      {isOpenModal && (
-        <Portal isOpen={isOpenModal}>
-          <LoadingSpinner />
-        </Portal>
-      )}
     </article>
   );
 }

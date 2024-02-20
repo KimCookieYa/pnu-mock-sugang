@@ -33,7 +33,7 @@ export default function SubjectApplyResultSection() {
                 NO
               </th>
               <th className="border border-slate-300 text-sm px-16 tracking-wider">
-                제거
+                놓기
               </th>
               {subjectPropValues.map((prop, index) => (
                 <THead key={index} value={prop} />
@@ -51,7 +51,7 @@ export default function SubjectApplyResultSection() {
                       className="border-red-600 border text-red-600 bg-white text-sm m-6 px-8 py-4 rounded-md text-nowrap"
                       onClick={() => onRemoveSubject(subject)}
                     >
-                      제거하기
+                      {pathname === "/register" ? "제거하기" : "놓기"}
                     </button>
                   </td>
                   {subjectPropValues.map((prop, index) => (

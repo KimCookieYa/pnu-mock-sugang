@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 
 export default function DesiredSubjectSection() {
   const [desiredValue, setDesiredValue] = useState<SubjectType[]>([]);
-
   const { storedValue: registerValue, setValue: setRegisterValue } =
     useLocalStorage("register", []);
 
@@ -15,8 +14,9 @@ export default function DesiredSubjectSection() {
 
   useEffect(() => {
     const temp = getDesiredSubjects();
-    console.log(temp);
-    setDesiredValue(temp);
+    if (temp) {
+      setDesiredValue(temp);
+    }
   }, []);
 
   return (

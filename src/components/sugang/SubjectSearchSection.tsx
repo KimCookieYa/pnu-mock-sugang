@@ -10,7 +10,7 @@ import { SubjectSearchResult } from "@/components/sugang/SubjectSearchResult";
 import { useEffect, useState } from "react";
 
 export default function SubjectSearchSection() {
-  const { filter, setSubjectValues, resetSubjectValues } = useFilterCondition();
+  const { filter, setSubjectValues } = useFilterCondition();
 
   const onClickQuery = async () => {
     const data = await readExcelData("/sugang-data-20240124.xlsx");

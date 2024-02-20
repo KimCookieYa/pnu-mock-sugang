@@ -1,14 +1,10 @@
 import { SubjectType } from "@/types/subject";
 import { getLocalStorage, setLocalStorage } from "./localstorage";
 
-interface LocalStorageSubject {
-  data: SubjectType[];
-}
-
 export function saveSubject(subject: SubjectType) {
   const strSubjects = getLocalStorage("subjects");
   if (strSubjects) {
-    const jsonSubjects = JSON.parse(strSubjects) as LocalStorageSubject;
+    const jsonSubjects = JSON.parse(strSubjects);
     jsonSubjects.data.push(subject);
     setLocalStorage("subjects", JSON.stringify(jsonSubjects));
     return true;
@@ -23,7 +19,7 @@ export function saveSubjects(subjects: SubjectType[]) {
 export function getSubjects() {
   const strSubjects = getLocalStorage("subjects");
   if (strSubjects) {
-    const jsonSubjects = JSON.parse(strSubjects) as LocalStorageSubject;
+    const jsonSubjects = JSON.parse(strSubjects);
     return jsonSubjects;
   }
   return [];
@@ -32,7 +28,7 @@ export function getSubjects() {
 export function saveDesiredSubject(subject: SubjectType) {
   const strSubjects = getLocalStorage("desired");
   if (strSubjects) {
-    const jsonSubjects = JSON.parse(strSubjects) as LocalStorageSubject;
+    const jsonSubjects = JSON.parse(strSubjects);
     jsonSubjects.data.push(subject);
     setLocalStorage("desired", JSON.stringify(jsonSubjects));
     return true;
@@ -43,8 +39,8 @@ export function saveDesiredSubject(subject: SubjectType) {
 export function getDesiredSubjects() {
   const strSubjects = getLocalStorage("desired");
   if (strSubjects) {
-    const jsonSubjects = JSON.parse(strSubjects) as LocalStorageSubject;
+    const jsonSubjects = JSON.parse(strSubjects) as SubjectType[];
     return jsonSubjects;
   }
-  return [];
+  return undefined;
 }

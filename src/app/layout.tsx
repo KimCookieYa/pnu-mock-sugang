@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import axios from "axios";
+import LoadingModal from "@/components/LoadingModal";
 
 export const metadata: Metadata = {
   title: "부산대학교 수강신청시스템 아님",
@@ -19,6 +19,7 @@ export default function RootLayout({
           {children}
         </div>
         <div id="modal-root" />
+        <LoadingModal />
       </body>
     </html>
   );
