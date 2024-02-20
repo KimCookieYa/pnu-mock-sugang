@@ -25,7 +25,7 @@ export default function Home() {
               <div className="flex text-pnuText">국문 / 영어</div>
             </div>
           </div>
-          <Link href="/main">
+          <Link href="/notice">
             <button className="bg-pnuBlue text-white px-48 h-90 rounded">
               로그인
             </button>
