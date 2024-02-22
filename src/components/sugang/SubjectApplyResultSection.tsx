@@ -4,6 +4,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import useAlert from "@/stores/alert";
 import { SubjectType, subjectPropValues } from "@/types/subject";
 import { usePathname } from "next/navigation";
+import { TCell, THead } from "../Table";
 
 export default function SubjectApplyResultSection() {
   const pathname = usePathname();
@@ -79,21 +80,5 @@ export default function SubjectApplyResultSection() {
         </table>
       </div>
     </article>
-  );
-}
-
-function THead({ value }: { value: string }) {
-  return (
-    <th className="border border-slate-300 text-sm px-16 py-8 text-nowrap tracking-wider">
-      <label>{value}</label>
-    </th>
-  );
-}
-
-function TCell({ value }: { value: string }) {
-  return (
-    <td className="border border-slate-300 max-w-200 text-sm py-4 text-center mx-auto px-8">
-      {value}
-    </td>
   );
 }

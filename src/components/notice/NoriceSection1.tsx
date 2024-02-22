@@ -1,6 +1,7 @@
 "use client";
 
 import { noticeData } from "@/datas/notice-data";
+import useLoading from "@/stores/loading";
 import { generateRandomDelay } from "@/utils/util";
 import { useRouter } from "next/navigation";
 import { Fragment, useState } from "react";
@@ -8,6 +9,7 @@ import { Fragment, useState } from "react";
 export default function NoticeSection1() {
   const router = useRouter();
   const [openIndexList, setOpenIndexList] = useState([true, true, true]);
+  const { setIsLoading } = useLoading();
 
   const handleRowClick = (index: number) => {
     setOpenIndexList((prev) => {
@@ -19,8 +21,9 @@ export default function NoticeSection1() {
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
-
+    setIsLoading(true);
     setTimeout(() => {
+      setIsLoading(false);
       router.push("/register");
     }, generateRandomDelay());
   };

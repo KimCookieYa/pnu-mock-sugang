@@ -2,15 +2,15 @@ import { SubjectType } from "@/types/subject";
 import { create } from "zustand";
 
 interface AlertData {
-  subject: SubjectType;
+  subject: SubjectType | undefined;
   message: string;
 }
 
 interface Alert {
-  type: "register" | "remove" | "none" | "normal";
+  type: "register" | "remove" | "none" | "normal" | "duplicate";
   data: AlertData | undefined;
   setMessage: (
-    type: "register" | "remove" | "none" | "normal",
+    type: "register" | "remove" | "none" | "normal" | "duplicate",
     data: AlertData | undefined
   ) => void;
 }

@@ -1,11 +1,12 @@
 import useFilterCondition from "@/stores/zustand";
 import { SubjectType, subjectPropValues } from "@/types/subject";
 import { Fragment } from "react";
-import { generateRandomDelay } from "@/utils/util";
+import { cls, generateRandomDelay } from "@/utils/util";
 import { usePathname } from "next/navigation";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import useLoading from "@/stores/loading";
 import useAlert from "@/stores/alert";
+import { TCell, THead } from "../Table";
 
 export function SubjectSearchResult() {
   const pathname = usePathname();
@@ -80,21 +81,5 @@ export function SubjectSearchResult() {
         </table>
       </div>
     </article>
-  );
-}
-
-function THead({ value }: { value: string }) {
-  return (
-    <th className="border border-slate-300 text-sm px-16 py-8 text-nowrap tracking-wider">
-      <label>{value}</label>
-    </th>
-  );
-}
-
-function TCell({ value }: { value: string }) {
-  return (
-    <td className="border border-slate-300 max-w-200 text-sm py-10 text-center mx-auto px-8">
-      {value}
-    </td>
   );
 }

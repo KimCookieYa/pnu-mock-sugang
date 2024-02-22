@@ -1,15 +1,32 @@
 import useLocalStorage from "@/hooks/useLocalStorage";
+import useAlert from "@/stores/alert";
+import useLoading from "@/stores/loading";
 import { SubjectType, subjectPropValues } from "@/types/subject";
 import { getDesiredSubjects } from "@/utils/subject";
+import { cls, generateRandomDelay } from "@/utils/util";
 import { useEffect, useState } from "react";
+import { TCell, THead } from "../Table";
 
 export default function DesiredSubjectSection() {
   const [desiredValue, setDesiredValue] = useState<SubjectType[]>([]);
   const { storedValue: registerValue, setValue: setRegisterValue } =
     useLocalStorage("register", []);
+  const { setIsLoading } = useLoading();
+  const { type, setMessage } = useAlert();
 
   const onRegisterSubject = (subject: SubjectType) => {
-    setRegisterValue([...registerValue, subject]);
+    if (registerValue.includes(subject)) {
+      setMessage("duplicate", {
+        subject: undefined,
+        message: "동일한 교과목을 이미 수강신청된 상태입니다.",
+      });
+      return;
+    }
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setRegisterValue([...registerValue, subject]);
+    }, generateRandomDelay());
   };
 
   useEffect(() => {
@@ -45,10 +62,16 @@ export default function DesiredSubjectSection() {
                   <TCell value={vindex.toString()} />
                   <td className="border border-slate-300 max-w-200 text-xs py-0 text-center mx-auto px-2">
                     <button
-                      className="border-green-600 border text-green-600 bg-white text-sm m-6 px-8 py-4 rounded-md text-nowrap"
+                      className={cls(
+                        "border bg-white text-sm m-6 px-8 py-4 rounded-md text-nowrap",
+                        registerValue.includes(subject)
+                          ? "border-pnuBgGray text-pnuBgGray cursor-not-allowed"
+                          : "border-green-600 text-green-600"
+                      )}
+                      disabled={registerValue.includes(subject)}
                       onClick={() => onRegisterSubject(subject)}
                     >
-                      신청하기
+                      {registerValue.includes(subject) ? "-" : "신청하기"}
                     </button>
                   </td>
                   {subjectPropValues.map((prop, index) => (
@@ -70,21 +93,5 @@ export default function DesiredSubjectSection() {
         </table>
       </div>
     </section>
-  );
-}
-
-function THead({ value }: { value: string }) {
-  return (
-    <th className="border border-slate-300 text-sm px-16 py-8 text-nowrap tracking-wider">
-      <label>{value}</label>
-    </th>
-  );
-}
-
-function TCell({ value }: { value: string }) {
-  return (
-    <td className="border border-slate-300 max-w-200 text-sm py-4 text-center mx-auto px-8">
-      {value}
-    </td>
   );
 }
