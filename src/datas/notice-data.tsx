@@ -15,9 +15,11 @@ export const noticeData = [
     ],
   },
   {
-    title: "건의사항 제보 안내",
+    title: "기타",
     content: [
+      "제일 위에 '희망과목담기' 탭에서 담은 교과목은 '수강신청' 탭에서 확인하실 수 있습니다.",
       `버그나 건의사항은 제 이메일(${process.env.NEXT_PUBLIC_MY_EMAIL})로 연락주시면 감사하겠습니다:)`,
+      `개발 코드가 궁금하신 분은 레포(${process.env.NEXT_PUBLIC_GITHUB_REPO})를 참고해주시길 바랍니다!`,
     ],
   },
 ];
