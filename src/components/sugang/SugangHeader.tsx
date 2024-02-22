@@ -43,6 +43,11 @@ export default function SugangHeader() {
             </li>
           </ul>
         </nav>
+        <Link href="/" className="ml-auto">
+          <button className="text-sm bg-pnuWarn rounded-md px-8 py-2 text-white">
+            로그아웃
+          </button>
+        </Link>
       </header>
       <div className="h-45 w-full" />
     </>
