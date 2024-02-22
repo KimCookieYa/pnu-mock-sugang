@@ -52,3 +52,9 @@ export function calCreditSum(subjects: SubjectType[]) {
   });
   return sum;
 }
+
+export function isDuplicate(subject: SubjectType, subjects: SubjectType[]) {
+  return subjects.some(
+    (s) => s.교과목명 + s.분반 === subject.교과목명 + subject.분반
+  );
+}

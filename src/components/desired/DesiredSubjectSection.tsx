@@ -2,7 +2,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import useAlert from "@/stores/alert";
 import useLoading from "@/stores/loading";
 import { SubjectType, subjectPropValues } from "@/types/subject";
-import { getDesiredSubjects } from "@/utils/subject";
+import { getDesiredSubjects, isDuplicate } from "@/utils/subject";
 import { cls, generateRandomDelay } from "@/utils/util";
 import { useEffect, useState } from "react";
 import { TCell, THead } from "../Table";
@@ -19,7 +19,7 @@ export default function DesiredSubjectSection({
   const { type, setMessage } = useAlert();
 
   const onRegisterSubject = (subject: SubjectType) => {
-    if (registerValue.includes(subject)) {
+    if (isDuplicate(subject, registerValue)) {
       setMessage("duplicate", {
         subject: undefined,
         message: "동일한 교과목을 이미 수강신청된 상태입니다.",
@@ -73,14 +73,14 @@ export default function DesiredSubjectSection({
                     <button
                       className={cls(
                         "border bg-white text-sm m-6 px-8 py-4 rounded-md text-nowrap",
-                        registerValue.includes(subject)
+                        isDuplicate(subject, registerValue)
                           ? "border-pnuBgGray text-pnuBgGray cursor-not-allowed"
                           : "border-green-600 text-green-600"
                       )}
-                      disabled={registerValue.includes(subject)}
+                      disabled={isDuplicate(subject, registerValue)}
                       onClick={() => onRegisterSubject(subject)}
                     >
-                      {registerValue.includes(subject) ? "-" : "신청하기"}
+                      {isDuplicate(subject, registerValue) ? "-" : "신청하기"}
                     </button>
                   </td>
                   {subjectPropValues.map((prop, index) => (
