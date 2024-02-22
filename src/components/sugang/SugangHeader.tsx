@@ -44,7 +44,7 @@ export default function SugangHeader() {
             </li>
           </ul>
         </nav>
-        <div className="ml-auto overflow-hidden w-500 relative">
+        <div className="ml-auto overflow-hidden w-500 relative animate-sparkling">
           <a href={process.env.NEXT_PUBLIC_MAILBADARA_URL} target="_blank">
             <p className="animate-slide-infinite text-white text-nowrap font-mono flex items-center gap-x-2">
               <SlStar />

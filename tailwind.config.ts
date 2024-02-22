@@ -36,9 +36,15 @@ const config: Config = {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(-100%)" },
         },
+        sparkling: {
+          "0%": { opacity: "0" },
+          "50%": { opacity: "1" },
+          "100%": { opacity: "0" },
+        },
       },
       animation: {
         "slide-infinite": "slide 10s linear infinite",
+        sparkling: "sparkling 1s  infinite",
       },
     },
   },
