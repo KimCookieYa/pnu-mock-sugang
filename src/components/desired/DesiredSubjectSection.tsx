@@ -7,7 +7,11 @@ import { cls, generateRandomDelay } from "@/utils/util";
 import { useEffect, useState } from "react";
 import { TCell, THead } from "../Table";
 
-export default function DesiredSubjectSection() {
+export default function DesiredSubjectSection({
+  visible,
+}: {
+  visible: boolean;
+}) {
   const [desiredValue, setDesiredValue] = useState<SubjectType[]>([]);
   const { storedValue: registerValue, setValue: setRegisterValue } =
     useLocalStorage("register", []);
@@ -37,7 +41,12 @@ export default function DesiredSubjectSection() {
   }, []);
 
   return (
-    <section className="flex flex-col gap-y-4 relative">
+    <section
+      className={cls(
+        "flex flex-col gap-y-4 relative duration-500 ease-in-out origin-top",
+        visible ? "opacity-100 max-h-screen" : "opacity-0 max-h-0"
+      )}
+    >
       <div className="border-2 border-black w-[calc(100%)] h-38 absolute top-0 z-20" />
       <div className="max-h-500 overflow-auto">
         <table className="w-full">

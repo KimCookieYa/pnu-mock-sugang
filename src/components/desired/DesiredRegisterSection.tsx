@@ -11,7 +11,7 @@ export default function DesiredRegisterSection() {
           <li className="w-full border-b border-pnuBlue"></li>
         </ul>
       </nav>
-      <SubjectSearchSection />
+      <SubjectSearchSection visible={true} />
     </div>
   );
 }

@@ -9,18 +9,28 @@ import { filterData } from "@/utils/filter";
 import { SubjectSearchResult } from "@/components/sugang/SubjectSearchResult";
 import { useState } from "react";
 import useAlert from "@/stores/alert";
+import { cls } from "@/utils/util";
 
-export default function SubjectSearchSection() {
+export default function SubjectSearchSection({
+  visible,
+}: {
+  visible: boolean;
+}) {
   const { filter, setSubjectValues } = useFilterCondition();
   const { type, data } = useAlert();
-  console.log(data);
+
   const onClickQuery = async () => {
     const data = await readExcelData("/sugang-data-20240124.xlsx");
     setSubjectValues(filterData(data, filter));
   };
 
   return (
-    <section className="flex flex-col gap-y-4 text-nowrap">
+    <section
+      className={cls(
+        "flex flex-col gap-y-4 text-nowrap duration-500 ease-in-out origin-top",
+        visible ? "opacity-100 max-h-screen" : "opacity-0 max-h-0"
+      )}
+    >
       <SubjectFilterMenu />
       <div className="flex justify-end items-center">
         <div className="flex mx-auto">

@@ -24,7 +24,7 @@ export default function SugangNavbarMenu() {
   };
 
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className="flex flex-col gap-y-4 overflow-hidden">
       <nav>
         <ul className="flex" id="sugang-navbar-menu">
           {sugangMenu.map((menu) => (
@@ -44,8 +44,8 @@ export default function SugangNavbarMenu() {
           <li className="w-full border-b border-pnuBlue"></li>
         </ul>
       </nav>
-      {currentTab === 0 && <DesiredSubjectSection />}
-      {currentTab === 1 && <SubjectSearchSection />}
+      <DesiredSubjectSection visible={currentTab === 0} />
+      <SubjectSearchSection visible={currentTab === 1} />
     </div>
   );
 }

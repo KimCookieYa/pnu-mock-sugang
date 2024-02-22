@@ -28,11 +28,11 @@ export default function SugangSearchBar() {
       setIsLoading(true);
       setTimeout(() => {
         setValue([...storedValue, subject]);
-        setIsLoading(false);
         setMessage("register", {
           message: `${subject.교과목명}(${subject.분반}분반)이 수강신청 완료되었습니다!`,
           subject: subject,
         });
+        setIsLoading(false);
       }, generateRandomDelay());
     } else {
       alert("해당 과목이 존재하지 않습니다!");
