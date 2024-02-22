@@ -31,6 +31,15 @@ const config: Config = {
       maxHeight: generateCSSObject("maxHeight"),
       padding: generateCSSObject("padding"),
       margin: generateCSSObject("margin"),
+      keyframes: {
+        slide: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+      },
+      animation: {
+        "slide-infinite": "slide 10s linear infinite",
+      },
     },
   },
   plugins: [],

@@ -3,12 +3,13 @@
 import Link from "next/link";
 import TitleLogo from "../TitleLogo";
 import { usePathname } from "next/navigation";
+import { SlStar } from "react-icons/sl";
 
 export default function SugangHeader() {
   const pathname = usePathname();
   return (
     <>
-      <header className="flex bg-pnuBlue h-45 items-center px-16 fixed top-0 left-0 right-0 w-full z-[10000]">
+      <header className="flex bg-pnuBlue h-45 items-center px-16 fixed top-0 left-0 right-0 w-full z-[10000] text-nowrap">
         <TitleLogo />
         <nav>
           <ul className="hidden sm:flex gap-x-12 ml-100">
@@ -43,6 +44,15 @@ export default function SugangHeader() {
             </li>
           </ul>
         </nav>
+        <div className="ml-auto overflow-hidden w-500 relative">
+          <a href={process.env.NEXT_PUBLIC_MAILBADARA_URL} target="_blank">
+            <p className="animate-slide-infinite text-white text-nowrap font-mono flex items-center gap-x-2">
+              <SlStar />
+              학과 홈페이지 소식을 뉴스레터로! MailBadara 구독 ㄱㄱ!
+              <SlStar />
+            </p>
+          </a>
+        </div>
         <Link href="/" className="ml-auto">
           <button className="text-sm bg-pnuWarn rounded-md px-8 py-2 text-white">
             로그아웃
